@@ -1,0 +1,507 @@
+PS C:\3tier-terraform> terraform plan
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.backend.azurerm_mssql_database.mssqldatabase will be created
+  + resource "azurerm_mssql_database" "mssqldatabase" {
+      + auto_pause_delay_in_minutes         = (known after apply)
+      + collation                           = "SQL_Latin1_General_CP1_CI_AS"
+      + create_mode                         = "Default"
+      + creation_source_database_id         = (known after apply)
+      + geo_backup_enabled                  = false
+      + id                                  = (known after apply)
+      + ledger_enabled                      = (known after apply)
+      + license_type                        = (known after apply)
+      + maintenance_configuration_name      = (known after apply)
+      + max_size_gb                         = 250
+      + min_capacity                        = (known after apply)
+      + name                                = "testmssqldatabase123"
+      + read_replica_count                  = (known after apply)
+      + read_scale                          = (known after apply)
+      + restore_point_in_time               = (known after apply)
+      + sample_name                         = (known after apply)
+      + server_id                           = (known after apply)
+      + sku_name                            = "S1"
+      + storage_account_type                = "Geo"
+      + tags                                = {
+          + "Criticality" = "medium"
+          + "Department"  = "labdepartment"
+          + "ProjectName" = "labproject"
+        }
+      + transparent_data_encryption_enabled = true
+      + zone_redundant                      = false
+    }
+
+  # module.backend.azurerm_mssql_server.mssqlserver will be created
+  + resource "azurerm_mssql_server" "mssqlserver" {
+      + administrator_login                  = "SqlAdmin"
+      + administrator_login_password         = (sensitive value)
+      + connection_policy                    = "Default"
+      + fully_qualified_domain_name          = (known after apply)
+      + id                                   = (known after apply)
+      + location                             = "eastus"
+      + minimum_tls_version                  = "1.2"
+      + name                                 = "labmysql123"
+      + outbound_network_restriction_enabled = false
+      + primary_user_assigned_identity_id    = (known after apply)
+      + public_network_access_enabled        = true
+      + resource_group_name                  = "lab_rg"
+      + restorable_dropped_database_ids      = (known after apply)
+      + tags                                 = {
+          + "Criticality" = "medium"
+          + "Department"  = "labdepartment"
+          + "ProjectName" = "labproject"
+        }
+      + version                              = "12.0"
+    }
+
+  # module.backend.random_password.mssql_password will be created
+  + resource "random_password" "mssql_password" {
+      + bcrypt_hash      = (sensitive value)
+      + id               = (known after apply)
+      + length           = 13
+      + lower            = true
+      + min_lower        = 0
+      + min_numeric      = 0
+      + min_special      = 0
+      + min_upper        = 0
+      + number           = true
+      + numeric          = true
+      + override_special = "_%@+"
+      + result           = (sensitive value)
+      + special          = true
+      + upper            = true
+    }
+
+  # module.network.azurerm_subnet.app-subnet will be created
+  + resource "azurerm_subnet" "app-subnet" {
+      + address_prefixes                               = [
+          + "172.158.2.0/24",
+        ]
+      + enforce_private_link_endpoint_network_policies = (known after apply)
+      + enforce_private_link_service_network_policies  = (known after apply)
+      + id                                             = (known after apply)
+      + name                                           = "lab-app-subnet"
+      + private_endpoint_network_policies_enabled      = (known after apply)
+      + private_link_service_network_policies_enabled  = (known after apply)
+      + resource_group_name                            = "lab_rg"
+      + virtual_network_name                           = "lab-vnet"
+    }
+
+  # module.network.azurerm_subnet.db-subnet will be created
+  + resource "azurerm_subnet" "db-subnet" {
+      + address_prefixes                               = [
+          + "172.158.3.0/24",
+        ]
+      + enforce_private_link_endpoint_network_policies = (known after apply)
+      + enforce_private_link_service_network_policies  = (known after apply)
+      + id                                             = (known after apply)
+      + name                                           = "lab-db-subnet"
+      + private_endpoint_network_policies_enabled      = (known after apply)
+      + private_link_service_network_policies_enabled  = (known after apply)
+      + resource_group_name                            = "lab_rg"
+      + virtual_network_name                           = "lab-vnet"
+    }
+
+  # module.network.azurerm_subnet.web-subnet will be created
+  + resource "azurerm_subnet" "web-subnet" {
+      + address_prefixes                               = [
+          + "172.158.1.0/24",
+        ]
+      + enforce_private_link_endpoint_network_policies = (known after apply)
+      + enforce_private_link_service_network_policies  = (known after apply)
+      + id                                             = (known after apply)
+      + name                                           = "lab-web-subnet"
+      + private_endpoint_network_policies_enabled      = (known after apply)
+      + private_link_service_network_policies_enabled  = (known after apply)
+      + resource_group_name                            = "lab_rg"
+      + virtual_network_name                           = "lab-vnet"
+    }
+
+  # module.network.azurerm_virtual_network.vnet will be created
+  + resource "azurerm_virtual_network" "vnet" {
+      + address_space       = [
+          + "172.158.0.0/16",
+        ]
+      + dns_servers         = (known after apply)
+      + guid                = (known after apply)
+      + id                  = (known after apply)
+      + location            = "eastus"
+      + name                = "lab-vnet"
+      + resource_group_name = "lab_rg"
+      + subnet              = (known after apply)
+      + tags                = {
+          + "Criticality" = "medium"
+          + "Department"  = "labdepartment"
+          + "ProjectName" = "labproject"
+        }
+    }
+
+  # module.resourcegroup.azurerm_resource_group.resource_group will be created
+  + resource "azurerm_resource_group" "resource_group" {
+      + id       = (known after apply)
+      + location = "eastus"
+      + name     = "lab_rg"
+      + tags     = {
+          + "Criticality" = "medium"
+          + "Department"  = "labdepartment"
+          + "ProjectName" = "labproject"
+        }
+    }
+
+  # module.security.azurerm_network_security_group.app-nsg will be created
+  + resource "azurerm_network_security_group" "app-nsg" {
+      + id                  = (known after apply)
+      + location            = "eastus"
+      + name                = "app-nsg"
+      + resource_group_name = "lab_rg"
+      + security_rule       = [
+          + {
+              + access                                     = "Allow"
+              + description                                = ""
+              + destination_address_prefix                 = "*"
+              + destination_address_prefixes               = []
+              + destination_application_security_group_ids = []
+              + destination_port_range                     = "22"
+              + destination_port_ranges                    = []
+              + direction                                  = "Inbound"
+              + name                                       = "ssh-rule-1"
+              + priority                                   = 100
+              + protocol                                   = "Tcp"
+              + source_address_prefix                      = "172.158.1.0/24"
+              + source_address_prefixes                    = []
+              + source_application_security_group_ids      = []
+              + source_port_range                          = "*"
+              + source_port_ranges                         = []
+            },
+          + {
+              + access                                     = "Allow"
+              + description                                = ""
+              + destination_address_prefix                 = "*"
+              + destination_address_prefixes               = []
+              + destination_application_security_group_ids = []
+              + destination_port_range                     = "22"
+              + destination_port_ranges                    = []
+              + direction                                  = "Outbound"
+              + name                                       = "ssh-rule-2"
+              + priority                                   = 101
+              + protocol                                   = "Tcp"
+              + source_address_prefix                      = "172.158.1.0/24"
+              + source_address_prefixes                    = []
+              + source_application_security_group_ids      = []
+              + source_port_range                          = "*"
+              + source_port_ranges                         = []
+            },
+        ]
+    }
+
+  # module.security.azurerm_network_security_group.web-nsg will be created
+  + resource "azurerm_network_security_group" "web-nsg" {
+      + id                  = (known after apply)
+      + location            = "eastus"
+      + name                = "web-nsg"
+      + resource_group_name = "lab_rg"
+      + security_rule       = [
+          + {
+              + access                                     = "Allow"
+              + description                                = ""
+              + destination_address_prefix                 = "*"
+              + destination_address_prefixes               = []
+              + destination_application_security_group_ids = []
+              + destination_port_range                     = "22"
+              + destination_port_ranges                    = []
+              + direction                                  = "Inbound"
+              + name                                       = "ssh-rule-1"
+              + priority                                   = 101
+              + protocol                                   = "Tcp"
+              + source_address_prefix                      = "*"
+              + source_address_prefixes                    = []
+              + source_application_security_group_ids      = []
+              + source_port_range                          = "*"
+              + source_port_ranges                         = []
+            },
+          + {
+              + access                                     = "Deny"
+              + description                                = ""
+              + destination_address_prefix                 = "*"
+              + destination_address_prefixes               = []
+              + destination_application_security_group_ids = []
+              + destination_port_range                     = "22"
+              + destination_port_ranges                    = []
+              + direction                                  = "Inbound"
+              + name                                       = "ssh-rule-2"
+              + priority                                   = 100
+              + protocol                                   = "Tcp"
+              + source_address_prefix                      = "172.158.3.0/24"
+              + source_address_prefixes                    = []
+              + source_application_security_group_ids      = []
+              + source_port_range                          = "*"
+              + source_port_ranges                         = []
+            },
+        ]
+    }
+
+  # module.security.azurerm_subnet_network_security_group_association.app-nsg-subnet will be created
+  + resource "azurerm_subnet_network_security_group_association" "app-nsg-subnet" {
+      + id                        = (known after apply)
+      + network_security_group_id = (known after apply)
+      + subnet_id                 = (known after apply)
+    }
+
+  # module.security.azurerm_subnet_network_security_group_association.web-nsg-subnet will be created
+  + resource "azurerm_subnet_network_security_group_association" "web-nsg-subnet" {
+      + id                        = (known after apply)
+      + network_security_group_id = (known after apply)
+      + subnet_id                 = (known after apply)
+    }
+
+  # module.virtualmachine.azurerm_backup_policy_vm.vm_backup_policy_weekly will be created
+  + resource "azurerm_backup_policy_vm" "vm_backup_policy_weekly" {
+      + id                             = (known after apply)
+      + instant_restore_retention_days = (known after apply)
+      + name                           = "vm-backup-policy-weekly"
+      + policy_type                    = "V1"
+      + recovery_vault_name            = "recovery-vault"
+      + resource_group_name            = "lab_rg"
+      + timezone                       = "UTC"
+
+      + backup {
+          + frequency = "Weekly"
+          + time      = "05:30"
+          + weekdays  = [
+              + "Saturday",
+            ]
+        }
+
+      + retention_weekly {
+          + count    = 90
+          + weekdays = [
+              + "Saturday",
+            ]
+        }
+    }
+
+  # module.virtualmachine.azurerm_backup_protected_vm.app_vm_backup will be created
+  + resource "azurerm_backup_protected_vm" "app_vm_backup" {
+      + backup_policy_id    = (known after apply)
+      + id                  = (known after apply)
+      + protection_state    = (known after apply)
+      + recovery_vault_name = "recovery-vault"
+      + resource_group_name = "lab_rg"
+      + source_vm_id        = (known after apply)
+    }
+
+  # module.virtualmachine.azurerm_backup_protected_vm.web_vm_backup will be created
+  + resource "azurerm_backup_protected_vm" "web_vm_backup" {
+      + backup_policy_id    = (known after apply)
+      + id                  = (known after apply)
+      + protection_state    = (known after apply)
+      + recovery_vault_name = "recovery-vault"
+      + resource_group_name = "lab_rg"
+      + source_vm_id        = (known after apply)
+    }
+
+  # module.virtualmachine.azurerm_network_interface.app_vm_nic will be created
+  + resource "azurerm_network_interface" "app_vm_nic" {
+      + applied_dns_servers           = (known after apply)
+      + dns_servers                   = (known after apply)
+      + enable_accelerated_networking = false
+      + enable_ip_forwarding          = false
+      + id                            = (known after apply)
+      + internal_dns_name_label       = (known after apply)
+      + internal_domain_name_suffix   = (known after apply)
+      + location                      = "eastus"
+      + mac_address                   = (known after apply)
+      + name                          = "lab-app-vm-NIC"
+      + private_ip_address            = (known after apply)
+      + private_ip_addresses          = (known after apply)
+      + resource_group_name           = "lab_rg"
+      + tags                          = {
+          + "Criticality" = "medium"
+          + "Department"  = "labdepartment"
+          + "ProjectName" = "labproject"
+        }
+      + virtual_machine_id            = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "lab-app-vm-PRV-IP"
+          + primary                                            = (known after apply)
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + subnet_id                                          = (known after apply)
+        }
+    }
+
+  # module.virtualmachine.azurerm_network_interface.web_vm_nic will be created
+  + resource "azurerm_network_interface" "web_vm_nic" {
+      + applied_dns_servers           = (known after apply)
+      + dns_servers                   = (known after apply)
+      + enable_accelerated_networking = false
+      + enable_ip_forwarding          = false
+      + id                            = (known after apply)
+      + internal_dns_name_label       = (known after apply)
+      + internal_domain_name_suffix   = (known after apply)
+      + location                      = "eastus"
+      + mac_address                   = (known after apply)
+      + name                          = "lab-web-vm-NIC"
+      + private_ip_address            = (known after apply)
+      + private_ip_addresses          = (known after apply)
+      + resource_group_name           = "lab_rg"
+      + tags                          = {
+          + "Criticality" = "medium"
+          + "Department"  = "labdepartment"
+          + "ProjectName" = "labproject"
+        }
+      + virtual_machine_id            = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "lab-web-vm-PRV-IP"
+          + primary                                            = (known after apply)
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + subnet_id                                          = (known after apply)
+        }
+    }
+
+  # module.virtualmachine.azurerm_recovery_services_vault.vm_recovery_vault will be created
+  + resource "azurerm_recovery_services_vault" "vm_recovery_vault" {
+      + classic_vmware_replication_enabled = (known after apply)
+      + cross_region_restore_enabled       = false
+      + id                                 = (known after apply)
+      + immutability                       = (known after apply)
+      + location                           = "eastus"
+      + name                               = "recovery-vault"
+      + public_network_access_enabled      = true
+      + resource_group_name                = "lab_rg"
+      + sku                                = "Standard"
+      + soft_delete_enabled                = false
+      + storage_mode_type                  = "GeoRedundant"
+      + tags                               = {
+          + "Criticality" = "medium"
+          + "Department"  = "labdepartment"
+          + "ProjectName" = "labproject"
+        }
+    }
+
+  # module.virtualmachine.azurerm_windows_virtual_machine.app_windows_vm will be created
+  + resource "azurerm_windows_virtual_machine" "app_windows_vm" {
+      + admin_password             = (sensitive value)
+      + admin_username             = "WindowsAdmin"
+      + allow_extension_operations = true
+      + computer_name              = (known after apply)
+      + enable_automatic_updates   = true
+      + extensions_time_budget     = "PT1H30M"
+      + hotpatching_enabled        = false
+      + id                         = (known after apply)
+      + location                   = "eastus"
+      + max_bid_price              = -1
+      + name                       = "lab-app-vm"
+      + network_interface_ids      = (known after apply)
+      + patch_assessment_mode      = "ImageDefault"
+      + patch_mode                 = "AutomaticByOS"
+      + platform_fault_domain      = -1
+      + priority                   = "Regular"
+      + private_ip_address         = (known after apply)
+      + private_ip_addresses       = (known after apply)
+      + provision_vm_agent         = true
+      + public_ip_address          = (known after apply)
+      + public_ip_addresses        = (known after apply)
+      + resource_group_name        = "lab_rg"
+      + size                       = "Standard_F2"
+      + tags                       = {
+          + "Criticality" = "medium"
+          + "Department"  = "labdepartment"
+          + "ProjectName" = "labproject"
+        }
+      + virtual_machine_id         = (known after apply)
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = (known after apply)
+          + name                      = (known after apply)
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "WindowsServer"
+          + publisher = "MicrosoftWindowsServer"
+          + sku       = "2019-Datacenter"
+          + version   = "latest"
+        }
+    }
+
+  # module.virtualmachine.azurerm_windows_virtual_machine.web_windows_vm will be created
+  + resource "azurerm_windows_virtual_machine" "web_windows_vm" {
+      + admin_password             = (sensitive value)
+      + admin_username             = "WindowsAdmin"
+      + allow_extension_operations = true
+      + computer_name              = (known after apply)
+      + enable_automatic_updates   = true
+      + extensions_time_budget     = "PT1H30M"
+      + hotpatching_enabled        = false
+      + id                         = (known after apply)
+      + location                   = "eastus"
+      + max_bid_price              = -1
+      + name                       = "lab-web-vm"
+      + network_interface_ids      = (known after apply)
+      + patch_assessment_mode      = "ImageDefault"
+      + patch_mode                 = "AutomaticByOS"
+      + platform_fault_domain      = -1
+      + priority                   = "Regular"
+      + private_ip_address         = (known after apply)
+      + private_ip_addresses       = (known after apply)
+      + provision_vm_agent         = true
+      + public_ip_address          = (known after apply)
+      + public_ip_addresses        = (known after apply)
+      + resource_group_name        = "lab_rg"
+      + size                       = "Standard_F2"
+      + tags                       = {
+          + "Criticality" = "medium"
+          + "Department"  = "labdepartment"
+          + "ProjectName" = "labproject"
+        }
+      + virtual_machine_id         = (known after apply)
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = (known after apply)
+          + name                      = (known after apply)
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "WindowsServer"
+          + publisher = "MicrosoftWindowsServer"
+          + sku       = "2019-Datacenter"
+          + version   = "latest"
+        }
+    }
+
+  # module.virtualmachine.random_password.windows_password will be created
+  + resource "random_password" "windows_password" {
+      + bcrypt_hash      = (sensitive value)
+      + id               = (known after apply)
+      + length           = 13
+      + lower            = true
+      + min_lower        = 0
+      + min_numeric      = 0
+      + min_special      = 0
+      + min_upper        = 0
+      + number           = true
+      + numeric          = true
+      + override_special = "_%@+"
+      + result           = (sensitive value)
+      + special          = true
+      + upper            = true
+    }
+
+Plan: 21 to add, 0 to change, 0 to destroy.
